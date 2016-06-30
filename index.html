@@ -140,7 +140,7 @@
 
     function getIsochrone(latlng) {
       console.log(latlng)
-      var apiCall = Mustache.render('https://104.131.4.58:8080/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2017/09/25&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700&cutoffSec=3600', latlng)
+      var apiCall = Mustache.render('http://104.131.4.58:8080/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2017/09/25&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700&cutoffSec=3600', latlng)
 
       $.getJSON(apiCall, function(geojson) {
         console.log(geojson)
