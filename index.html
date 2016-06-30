@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="./favicon.ico">
 
-    <title>CartoDB Bootstrap Starter Template</title>
+    <title>OTP Isochrones</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -68,7 +68,7 @@
             <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
             <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
           </div>
-          <a class="navbar-brand" href="#">CartoDB Template</a>
+          <a class="navbar-brand" href="#">OTP Isochrones</a>
         </div>
         <div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="search">
@@ -118,23 +118,51 @@
     <script>
 
     var map = new L.Map('map', { 
-      center: [40.1,-100.3],
-      zoom: 4
+      center: [40.687928,-73.979530],
+      zoom: 11
     });
 
     L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     }).addTo(map);
 
-    var layerUrl = 'http://documentation.cartodb.com/api/v2/viz/236085de-ea08-11e2-958c-5404a6a683d5/viz.json';
+    var marker,
+    geojsonLayer
 
-    cartodb.createLayer(map, layerUrl)
-      .addTo(map)
-      .on('done', function(layer) {
+    map.on('click', function(e){
+        (geojsonLayer) ? map.removeLayer(geojsonLayer) : null;
+        (marker) ? map.removeLayer(marker) : null;
+        marker = new L.marker(e.latlng).addTo(map);
 
-      }).on('error', function() {
-        //log the error
-      });
+        getIsochrone(e.latlng);
+    });
+
+    function getIsochrone(latlng) {
+      console.log(latlng)
+      var apiCall = Mustache.render('http://104.131.4.58:8080/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2017/09/25&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700&cutoffSec=3600', latlng)
+
+      $.getJSON(apiCall, function(geojson) {
+        console.log(geojson)
+        geojsonLayer = L.geoJson(geojson, {
+          style: function(feature) {
+            console.log(feature)
+              return {
+                weight: 1,
+                opacity: .7,
+                fillOpacity: .7,
+                color: (feature.properties.time == 900) ? "#238b45" :
+                  (feature.properties.time == 1800) ? "#66c2a4" :
+                  (feature.properties.time == 2700) ? "#b2e2e2" :
+                  (feature.properties.time == 3600) ? "#edf8fb" : null
+              }
+
+         
+          }
+        }).addTo(map)
+      })
+    }
+
+
 
     </script>
   </body>
