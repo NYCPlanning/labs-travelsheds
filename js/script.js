@@ -95,7 +95,7 @@ $('.download-button').click(function() {
     map.on('style.load', function() {    
       $.ajax({
         type: 'POST',
-        url: 'http://cwhong.carto.com/api/v1/map/named/tpl_230e29ac_7640_11e6_89c5_0e05a8b3e3d7',
+        url: 'https://cwhong.carto.com/api/v1/map/named/tpl_230e29ac_7640_11e6_89c5_0e05a8b3e3d7',
         dataType : "text",
         contentType: "application/json",
         success: function(data) { 
