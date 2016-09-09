@@ -79,7 +79,7 @@
 
 function getIsochrone(lngLat) {
   console.log(lngLat)
-  var apiCall = Mustache.render('http://{{host}}/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2016/09/25&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700', {
+  var apiCall = Mustache.render('https://{{host}}/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2016/09/25&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700', {
       lat: lngLat.lat,
       lng: lngLat.lng,
       host: 'otp.reallysimpleopendata.com'
