@@ -9,9 +9,10 @@
     <meta name="author" content="">
     <link rel="icon" href="./favicon.ico">
 
-    <title>OTP Isochrones</title>
+    <title>Travelsheds</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
     <link rel="icon" type="image/png" href="./favicon.png">
@@ -25,7 +26,8 @@
     }
 
     body {
-      padding-top: 50px;
+      padding-top: 80px;
+      font-family: 'Oswald', sans-serif;
     }
 
     #map {
@@ -44,67 +46,58 @@
       transition: all 0.25s ease-out;
     }
 
-    .navbar .navbar-brand {
-      font-weight: bold;
-      font-size: 25px;
-      color: #FFFFFF;
+    nav {
+      height: 80px;
     }
 
-    .navbar {
-      background-image: linear-gradient(to bottom, #2b6988 0%, #1f4b61 100%);
+    .navbar-default {
+      background-color: #EBEBEB;
     }
 
-    .navbar-inverse .navbar-nav>li>a {
-      color: #fff;
+    .navbar-default .navbar-nav>li>a {
+      padding: 30px 18px;
+      color: #db691b;
     }
+
+    .navbar-default .navbar-brand {
+      padding: 30px 18px;
+      color: #db691b;
+      background-image: url("img/logo_80.png");
+      background-repeat: no-repeat;
+      background-position: 16px 0;
+      padding-left: 109px;
+    }
+
+    #navbar {
+      border-bottom: 1.5px solid #db691b;
+    }
+    .navbar-brand {
+      font-size: 28px;
+    }
+
+   
   </style>
 
   <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <div class="navbar-icon-container">
-            <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
-            <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
-          </div>
-          <a class="navbar-brand" href="#">OTP Isochrones</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="search">
-            <div class="form-group has-feedback">
-                <span class="twitter-typeahead" style="position: static; display: block; direction: ltr;"><input id="searchbox" type="text" placeholder="Search" class="form-control tt-input" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none; right: auto;"><div class="tt-dataset-Boroughs"></div><div class="tt-dataset-Theaters"></div><div class="tt-dataset-Museums"></div><div class="tt-dataset-GeoNames"></div></span></span>
-                <span id="searchicon" class="fa fa-search form-control-feedback"></span>
-            </div>
-          </form>
-          <ul class="nav navbar-nav">
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
-            <li class="dropdown">
-              <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Show Legend</a></li>
-                <li class="divider hidden-xs"></li>
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Login</a></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cloud-download white"></i>&nbsp;&nbsp;Download <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="data/boroughs.geojson" download="boroughs.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Boroughs</a></li>
-                  <li><a href="data/subways.geojson" download="subways.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Subway Lines</a></li>
-                  <li><a href="data/DOITT_THEATER_01_13SEPT2010.geojson" download="theaters.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Theaters</a></li>
-                  <li><a href="data/DOITT_MUSEUM_01_13SEPT2010.geojson" download="museums.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Museums</a></li>
-                </ul>
-            </li>
-            <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;POI List</a></li>
-          </ul>
-        </div><!--/.navbar-collapse -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+
+      <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="#">Travelsheds</a></div>
+      <div id="navbar" class="navbar-collapse collapse">
+         <ul class="nav navbar-nav ">
+            <li><a href="../navbar/">About</a></li>
+            <li><a href="../navbar/">Data</a></li>
+         </ul>
       </div>
-    </div>
+   
+</nav>
 
     <div id="container">
       <div id="sidebar">
+        <div class="col-md-12">
+          <h4>Click the map to generate a travelshed</h4>
+        </div>
+        
         
       </div>
       <div id="map">
@@ -113,57 +106,10 @@
     </div><!-- /.container -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script>
-
-    var map = new L.Map('map', { 
-      center: [40.687928,-73.979530],
-      zoom: 11
-    });
-
-    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    }).addTo(map);
-
-    var marker,
-    geojsonLayer
-
-    map.on('click', function(e){
-        (geojsonLayer) ? map.removeLayer(geojsonLayer) : null;
-        (marker) ? map.removeLayer(marker) : null;
-        marker = new L.marker(e.latlng).addTo(map);
-
-        getIsochrone(e.latlng);
-    });
-
-    function getIsochrone(latlng) {
-      console.log(latlng)
-      var apiCall = Mustache.render('http://104.131.4.58:8080/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2017/09/25&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700&cutoffSec=3600', latlng)
-
-      $.getJSON(apiCall, function(geojson) {
-        console.log(geojson)
-        geojsonLayer = L.geoJson(geojson, {
-          style: function(feature) {
-            console.log(feature)
-              return {
-                weight: 1,
-                opacity: .7,
-                fillOpacity: .7,
-                color: (feature.properties.time == 900) ? "#238b45" :
-                  (feature.properties.time == 1800) ? "#66c2a4" :
-                  (feature.properties.time == 2700) ? "#b2e2e2" :
-                  (feature.properties.time == 3600) ? "#edf8fb" : null
-              }
-
-         
-          }
-        }).addTo(map)
-      })
-    }
-
-
-
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+    <script src="js/script.js"></script>
+   
   </body>
 </html>
