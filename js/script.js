@@ -1,6 +1,8 @@
 var isochroneFC
 
+
 zip.workerScriptsPath = 'js/zipWorkerScripts/'
+
 
 
 $('.download-button').click(function() {
@@ -25,6 +27,25 @@ $('.download-button').click(function() {
     format: "shapefile"
   })
 
+  //add this as .prj file GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]
+
+  console.log(files)
+
+  var crsString = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]'
+ 
+  var buf = new ArrayBuffer(crsString.length*2)
+  var bufView = new Uint16Array(buf);
+
+  for (var i=0, strLen=crsString.length; i<strLen; i++) {
+    bufView[i] = crsString.charCodeAt(i);
+  }
+
+  files.push({
+    content: buf,
+    filename: '.prj'
+  })
+
+  console.log(files)
   
 
   saveZipFile('travelsheds.zip',files, function(){
@@ -179,11 +200,19 @@ $('.download-button').click(function() {
 
 function getIsochrone(lngLat) {
 
-  var apiCall = Mustache.render('https://{{host}}/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2016/09/25&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700', {
+  var apiCall = Mustache.render('https://{{host}}/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2016/09/25&time=12:00:00&mode={{mode}}', {
       lat: lngLat.lat,
       lng: lngLat.lng,
-      host: 'otp.reallysimpleopendata.com'
+      host: 'otp.reallysimpleopendata.com',
+      mode: mode
   })
+
+  cutoffs.forEach(function(cutoff) {
+    var seconds = cutoff * 60
+    apiCall += '&cutoffSec=' + seconds
+  })
+
+  console.log('Fetching isochrones...', apiCall)
 
   $.getJSON(apiCall, function(geojson) {
 
@@ -196,3 +225,8 @@ function getIsochrone(lngLat) {
   })
 }
 
+window.mode = 'TRANSIT,WALK'
+
+$( ".mode-select" ).change(function(e) {
+  mode=e.target.value
+});

@@ -76,6 +76,14 @@
       font-size: 28px;
     }
 
+    #form input{
+      text-align: center;
+    }
+
+    #form .row {
+      padding-bottom: 10px;
+    }
+
    
   </style>
 
@@ -98,7 +106,21 @@
 
         <div class="col-md-12">
           <h4>Click the map to generate a travelshed</h4>
-          <div class="btn btn-primary download-button">Download</div>
+          <h5>Travel Mode(s)</h5>
+          <div class="form-group">
+          
+            <select class="form-control mode-select" >
+              <option value="TRANSIT,WALK">Transit + Walk</option>
+              <option value="WALK">Walk</option>
+              <option value="BICYCLE">Bicycle</option>
+              <option value="CAR">Car</option>
+              <option value="TRANSIT,BICYCLE">Transit + Bicycle</option>
+
+            </select>
+          </div>
+          <div id="form"></div>
+          <h5>Download</h5>
+          <div class="btn btn-primary download-button">Shapefile</div>
         </div>
         
         
@@ -112,9 +134,88 @@
     <script src="js/mapshaper.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
+    <script src="https://fb.me/react-15.0.0.js"></script>
+    <script src="https://fb.me/react-dom-15.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+
+    <script type="text/babel">
+
+      window.cutoffs = [15, 30, 45]
+
+
+
+  
+
+      var CutoffChooser = React.createClass({
+        delete: function(i) {
+          cutoffs.splice(i,1)
+          renderDom()
+        },
+
+        handleChange: function(i,e) {
+          cutoffs[i] = parseInt(e.target.value)
+          renderDom()
+        },
+
+        addCutoff: function() {
+          cutoffs.push(cutoffs[cutoffs.length - 1])
+          renderDom()
+        },
+
+        render: function(){
+          var self=this;
+          console.log(this.props)
+
+          return(
+            <div >
+              <h5>Distance Cutoffs</h5>
+            
+             
+              
+                {
+                  this.props.cutoffs.map(function(cutoff,i) {
+                    console.log(cutoff)
+                    return(
+                      <div key={cutoffs.length + '_' + i} className="row">
+                        <div className="col-md-6">
+                          <div onClick={self.delete.bind(self, i)} className="btn btn-warning btn-xs pull-right">&#10006;</div>
+                        </div>
+                        <div className="col-md-3">
+                          <input 
+                            type="text" 
+                            width={10} 
+                            defaultValue={cutoff} 
+                            className="form-control cutoff-input" 
+                            onChange={self.handleChange.bind(self, i)}/> 
+                        </div>
+                        <div className="col-md-3">
+                          minutes
+                        </div>
+                      </div>
+                    ) 
+                  })
+                }
+                
+                <div onClick={self.addCutoff} className="btn btn-success btn-xs pull-right">✚</div>
+          
+            </div>
+          )
+        }
+      })
+
+      function renderDom() {
+        ReactDOM.render(
+          <CutoffChooser cutoffs={cutoffs}/>,
+          document.getElementById('form')
+        );      
+      }
+
+      renderDom()
+
+    </script>
     <script src="js/script.js"></script>
  
   </body>
