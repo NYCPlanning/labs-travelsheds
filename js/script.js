@@ -196,7 +196,7 @@ $('.download-button').click(function() {
 
       map.on('click', function(e){
 
-  
+        $('#loading-overlay').fadeIn()
         map.setLayoutProperty('transitsheds', 'visibility', 'none')
 
         map.getSource('dropped-pin').setData({
@@ -238,7 +238,7 @@ function getIsochrone(lngLat) {
 
     map.getSource('transitsheds').setData(geojson)
     map.setLayoutProperty('transitsheds', 'visibility', 'visible')
-
+    $('#loading-overlay').fadeOut()
 
   })
 }
