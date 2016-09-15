@@ -1,103 +1,6 @@
 var isochroneFC
-
-
 zip.workerScriptsPath = 'js/zipWorkerScripts/'
 
-
-
-$('.download-button').click(function() {
-
-  var options = {
-    folder: 'myshapes',
-    types: {
-        point: 'mypoints',
-        polygon: 'mypolygons',
-        line: 'mylines'
-    }
-  }
-
-  //create a mapshaper dataset from geojson FeatureCollection
-  var msDataset = mapshaper.internal.importGeoJSON(isochroneFC, {
-    auto_snap:false,
-    files:['input.json'],
-    no_repair:false
-  })
-
-  //create an array of ArrayBuffers (one per file in the shapefile)
-  var files = mapshaper.internal.exportShapefile(msDataset, {
-    format: "shapefile"
-  })
-
-  //manually create a .prj file for WGS84
-  var crsString = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]'
- 
-  var buf = new ArrayBuffer(crsString.length*2)
-  var bufView = new Uint16Array(buf);
-
-  for (var i=0, strLen=crsString.length; i<strLen; i++) {
-    bufView[i] = crsString.charCodeAt(i);
-  }
-
-  files.push({
-    content: buf,
-    filename: '.prj'
-  })
-  
-
-  saveZipFile('travelsheds.zip',files, function(){
-  })
-
-  //combine all files into a zip archive
-  //from mapshaper-gui.js
- function saveZipFile(zipfileName, files, done) {
-    var toAdd = files;
-    try {
-      zip.createWriter(new zip.BlobWriter("application/zip"), addFile, zipError);
-    } catch(e) {
-      // TODO: show proper error message, not alert
-      done("This browser doesn't support Zip file creation.");
-    }
-
-    function zipError(msg) {
-      var str = "Error creating Zip file";
-      if (msg) {
-        str += ": " + (msg.message || msg);
-      }
-      done(str);
-    }
-
-    function addFile(archive) {
-      if (toAdd.length === 0) {
-        archive.close(function(blob) {
-          saveBlob(zipfileName, blob, done);
-        });
-      } else {
-        var obj = toAdd.pop(),
-            blob = new Blob([obj.content], { type: "text/plain" });
-        archive.add('travelsheds' + obj.filename, new zip.BlobReader(blob), function() {addFile(archive);});
-      }
-    }
-  }
-
-  //start the download
-  function saveBlob(filename, blob, done) {
-    //IE11 & Edge
-    if (navigator.msSaveBlob) {
-        navigator.msSaveBlob(csvData, exportFilename);
-    } else {
-        //In FF link must be added to DOM to be clicked
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', filename);
-        document.body.appendChild(link);    
-        link.click();
-        //document.body.removeChild(link);    
-    }
-    done();
-  }
-
-})
-  
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q';
     var map = new mapboxgl.Map({
         container: 'map',
@@ -207,13 +110,139 @@ $('.download-button').click(function() {
           }
         })
 
+        $('.download-button').attr('disabled', true)
+
         getIsochrone(e.lngLat);
       }) 
     }
 
-    
+// Event Handlers 
+  
+window.mode = 'TRANSIT,WALK'
+
+$( ".mode-select" ).change(function(e) {
+  mode=e.target.value
+})
+
+$('.clear-button').click(function() {
+  map.getSource('transitsheds').setData({
+    type: 'FeatureCollection',
+    features: []
+  })
+
+  //disable download buttons
+  $('.download-button').attr('disabled', true)
+
+  //restore default message
+  $('.message').show()
+  $('.clear-button').hide()
+
+})
+
+$('.download-shp').click(function() {
+
+  var options = {
+    folder: 'myshapes',
+    types: {
+        point: 'mypoints',
+        polygon: 'mypolygons',
+        line: 'mylines'
+    }
+  }
+
+  //create a mapshaper dataset from geojson FeatureCollection
+  var msDataset = mapshaper.internal.importGeoJSON(isochroneFC, {
+    auto_snap:false,
+    files:['input.json'],
+    no_repair:false
+  })
+
+  //create an array of ArrayBuffers (one per file in the shapefile)
+  var files = mapshaper.internal.exportShapefile(msDataset, {
+    format: "shapefile"
+  })
+
+  //manually create a .prj file for WGS84
+  var crsString = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]'
+ 
+  var buf = new ArrayBuffer(crsString.length*2)
+  var bufView = new Uint16Array(buf);
+
+  for (var i=0, strLen=crsString.length; i<strLen; i++) {
+    bufView[i] = crsString.charCodeAt(i);
+  }
+
+  files.push({
+    content: buf,
+    filename: '.prj'
+  })
   
 
+  saveZipFile('travelsheds.zip',files, function(){
+  })
+
+  //combine all files into a zip archive
+  //from mapshaper-gui.js
+ function saveZipFile(zipfileName, files, done) {
+    var toAdd = files;
+    try {
+      zip.createWriter(new zip.BlobWriter("application/zip"), addFile, zipError);
+    } catch(e) {
+      // TODO: show proper error message, not alert
+      done("This browser doesn't support Zip file creation.");
+    }
+
+    function zipError(msg) {
+      var str = "Error creating Zip file";
+      if (msg) {
+        str += ": " + (msg.message || msg);
+      }
+      done(str);
+    }
+
+    function addFile(archive) {
+      if (toAdd.length === 0) {
+        archive.close(function(blob) {
+          saveBlob(zipfileName, blob, done);
+        });
+      } else {
+        var obj = toAdd.pop(),
+            blob = new Blob([obj.content], { type: "text/plain" });
+        archive.add('travelsheds' + obj.filename, new zip.BlobReader(blob), function() {addFile(archive);});
+      }
+    }
+  }
+
+  //start the download
+  function saveBlob(filename, blob, done) {
+    //IE11 & Edge
+    if (navigator.msSaveBlob) {
+        navigator.msSaveBlob(csvData, exportFilename);
+    } else {
+        //In FF link must be added to DOM to be clicked
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);    
+        link.click();
+        //document.body.removeChild(link);    
+    }
+    done();
+  }
+
+})
+
+
+$('.download-geojson').click(function() {
+    $("<a />", {
+      "download": "travelsheds.geojson",
+      "href" : "data:application/json," + encodeURIComponent(JSON.stringify(isochroneFC))
+    }).appendTo("body")
+    .click(function() {
+       $(this).remove()
+    })[0].click()
+
+})
 
 
 function getIsochrone(lngLat) {
@@ -239,12 +268,12 @@ function getIsochrone(lngLat) {
     map.getSource('transitsheds').setData(geojson)
     map.setLayoutProperty('transitsheds', 'visibility', 'visible')
     $('#loading-overlay').fadeOut()
+    $('.download-button').attr('disabled', false)
+
+    $('.message').hide()
+    $('.clear-button').show()
 
   })
 }
 
-window.mode = 'TRANSIT,WALK'
 
-$( ".mode-select" ).change(function(e) {
-  mode=e.target.value
-});

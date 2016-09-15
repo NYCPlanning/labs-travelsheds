@@ -4,186 +4,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="./favicon.ico">
+
 
     <title>Travelsheds</title>
-    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
+    <link rel="icon" href="./favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css">
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-    <link rel="icon" type="image/png" href="./favicon.png">
+    <script src="https://use.fontawesome.com/1ef4cc9437.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
   </head>
 
-  <style>
-    html, body, #container {
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      padding-top: 80px;
-      font-family: 'Oswald', sans-serif;
-    }
-
-    #map {
-      width: auto;
-      height: 100%;
-      box-shadow: 0 0 10px rgba(0,0,0,0.55);
-    }
-
-    #loading-overlay {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      background-color: rgba(128, 128, 128, 0.18);
-      z-index: 5;
-      display:none;
-    }
-
-    #loading-overlay h3 {
-      font-family: oswald;
-      color: #d96b27;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .spinner {
-      position: relative;
-      top: 78px;      
-    }
-
-    #sidebar {
-      width: 300px;
-      height: 100%;
-      max-width: 100%;
-      float: left;
-      -webkit-transition: all 0.25s ease-out;
-      -moz-transition: all 0.25s ease-out;
-      transition: all 0.25s ease-out;
-    }
-
-    nav {
-      height: 80px;
-    }
-
-    .navbar-default {
-      background-color: #EBEBEB;
-    }
-
-    .navbar-default .navbar-nav>li>a {
-      padding: 30px 18px;
-      color: #db691b;
-      font-size: 16px;
-    }
-
-    .navbar-default .navbar-brand {
-      padding: 30px 18px;
-      color: #db691b;
-      background-image: url("img/logo_80.png");
-      background-repeat: no-repeat;
-      background-position: 16px 0;
-      padding-left: 109px;
-    }
-
-    #navbar {
-      border-bottom: 1.5px solid #db691b;
-    }
-    .navbar-brand {
-      font-size: 28px;
-    }
-
-    #form input{
-      text-align: center;
-    }
-
-    #form .row {
-      padding-bottom: 10px;
-    }
-
-    h4 {
-      margin-top: 25px;
-    }
-
-    .cutoff-row {
-      margin-bottom: 12px;
-    }
-
-    .h4-mini {
-      font-size: 12px;
-    }
-   
-
-/*spinkit*/
-
-.spinner {
-  margin: 100px auto;
-  width: 40px;
-  height: 40px;
-  position: relative;
-  text-align: center;
-  
-  -webkit-animation: sk-rotate 2.0s infinite linear;
-  animation: sk-rotate 2.0s infinite linear;
-}
-
-.dot1, .dot2 {
-  width: 60%;
-  height: 60%;
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  background-color: #d96b27;
-  border-radius: 100%;
-  
-  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-  animation: sk-bounce 2.0s infinite ease-in-out;
-}
-
-.dot2 {
-  top: auto;
-  bottom: 0;
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
-}
-
-/*end spinkit*/
-@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
-@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
-
-@-webkit-keyframes sk-bounce {
-  0%, 100% { -webkit-transform: scale(0.0) }
-  50% { -webkit-transform: scale(1.0) }
-}
-
-@keyframes sk-bounce {
-  0%, 100% { 
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 50% { 
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
-  }
-}
-
-  </style>
+ 
 
   <body>
 
     <nav class="navbar navbar-default navbar-fixed-top">
-
       <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="#">Travelsheds</a></div>
       <div id="navbar" class="navbar-collapse collapse">
          <ul class="nav navbar-nav ">
             <li><a href="../navbar/"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
-            <li><a href="../navbar/">Fork Me on GitHub</a></li>
+            <li><a href="../navbar/"><i class="fa fa-github fa-3" aria-hidden="true"></i> Fork Me on GitHub</a></li>
          </ul>
       </div>
    
@@ -208,14 +52,15 @@
           </div>
           <div id="form"></div>
           <h4>Download</h4>
-          <div class="btn btn-primary download-button disabled">Shapefile</div>
-          <div class="btn btn-primary download-button disabled">GeoJSON</div>
+          <div class="btn btn-primary download-button download-shp" disabled>Shapefile</div>
+          <div class="btn btn-primary download-button download-geojson" disabled>GeoJSON</div>
         </div>
-        
-        
-
       </div>
       <div id="map">
+        <div class="messageOverlay mapOverlay">
+          <div class='message'>Click anywhere on the map to generate travelshed polygons</div>
+          <div class='clear-button'><button class="btn btn-default btn-sm">Clear Map</button></div>
+        </div>
         <div id="loading-overlay">
           <!-- from http://tobiasahlin.com/spinkit/ -->
           <div class="spinner">
@@ -225,13 +70,10 @@
           <h3>Loading Travelsheds</h3>
         </div>
       </div>
-
-
-    </div><!-- /.container -->
+    </div>
     <script src="js/zip.js"></script>
     <script src="js/mapshaper.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
     <script src="https://fb.me/react-15.0.0.js"></script>
     <script src="https://fb.me/react-dom-15.0.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
@@ -239,82 +81,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
 
+    <script type="text/babel" src='js/CutoffChooser.jsx'></script>
     <script type="text/babel">
-
-      window.cutoffs = [15, 30, 45]
-
-
-
-  
-
-      var CutoffChooser = React.createClass({
-        delete: function(i) {
-          cutoffs.splice(i,1)
-          renderDom()
-        },
-
-        handleChange: function(i,e) {
-          cutoffs[i] = parseInt(e.target.value)
-          renderDom()
-        },
-
-        addCutoff: function() {
-          cutoffs.push(null)
-          renderDom()
-        },
-
-        render: function(){
-          var self=this;
-          console.log(this.props)
-
-          return(
-            <div >
-              <h4>Time Cutoffs <span className="h4-mini">(minutes)</span></h4>
-                {
-                  this.props.cutoffs.map(function(cutoff,i) {
-                      
-                    var button = (i == self.props.cutoffs.length-1) ?
-                      <button className="btn btn-success" type="button" onClick={self.addCutoff}>✚</button> :
-                      <button className="btn btn-danger" type="button" onClick={self.delete.bind(self, i)}>✖</button> 
-
-                    return(
-                      <div key={cutoffs.length + '_' + i} className="input-group cutoff-row">
-                        
-                  
-                          {/*<span onClick={self.delete.bind(self, i)} className="badge">  &#45;</span>*/}
-                 
-                            
-                            <input 
-                              type="text" 
-                              width={10} 
-                              defaultValue={cutoff} 
-                              className="form-control" 
-                              placeholder="minutes"
-                              onChange={self.handleChange.bind(self, i)}
-                            /> 
-                            <span className="input-group-btn">
-                              {button}
-                            </span>
-                      </div>
-                    ) 
-                  })
-                }
-                
-                {/*<div onClick={self.addCutoff} className="btn btn-success btn-xs pull-right">✚</div>*/}
-          
-            </div>
-          )
-        }
-      })
-
-      function renderDom() {
-        ReactDOM.render(
-          <CutoffChooser cutoffs={cutoffs}/>,
-          document.getElementById('form')
-        );      
-      }
-
-      renderDom()
 
     </script>
     <script src="js/script.js"></script>

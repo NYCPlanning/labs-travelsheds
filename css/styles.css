@@ -1,0 +1,173 @@
+html, body, #container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  padding-top: 80px;
+  font-family: 'Oswald', sans-serif;
+}
+
+#map {
+  width: auto;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.55);
+}
+
+.mapOverlay {
+  padding: 10px;
+  font-family: 'Oswald', sans-serif;
+  z-index: 10;
+  position: absolute;
+  min-width: 90px;
+  background: rgba(230, 230, 230, 0.65);
+  font-size: 15px;
+}
+.messageOverlay {
+  border-radius: 0 0 10px 0;
+}
+
+.clear-button {
+  display:none;
+}
+
+#loading-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.18);
+  z-index: 5;
+  display:none;
+}
+
+#loading-overlay h3 {
+  font-family: oswald;
+  color: #d96b27;
+  margin: 0 auto;
+  text-align: center;
+  text-shadow: 2px 2px 2px hsla(216, 1%, 5%, 0.45);
+}
+
+.spinner {
+  position: relative;
+  top: 78px;      
+}
+
+#sidebar {
+  width: 300px;
+  height: 100%;
+  max-width: 100%;
+  float: left;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+
+nav {
+  height: 80px;
+}
+
+.navbar-default {
+  background-color: #EBEBEB;
+}
+
+.navbar-default .navbar-nav>li>a {
+  padding: 30px 18px;
+  color: #db691b;
+  font-size: 16px;
+}
+
+.navbar-default .navbar-brand {
+  padding: 30px 18px;
+  color: #db691b;
+  background-image: url("../img/logo_80.png");
+  background-repeat: no-repeat;
+  background-position: 16px 0;
+  padding-left: 109px;
+}
+
+#navbar {
+  border-bottom: 1.5px solid #db691b;
+}
+.navbar-brand {
+  font-size: 28px;
+}
+
+.fa-github {
+  font-size: 18px;
+}
+
+#form input{
+  text-align: center;
+}
+
+#form .row {
+  padding-bottom: 10px;
+}
+
+h4 {
+  margin-top: 25px;
+}
+
+.cutoff-row {
+  margin-bottom: 12px;
+}
+
+.h4-mini {
+  font-size: 12px;
+}
+
+
+/*spinkit*/
+.spinner {
+  margin: 100px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  text-align: center;
+  
+  -webkit-animation: sk-rotate 2.0s infinite linear;
+  animation: sk-rotate 2.0s infinite linear;
+}
+
+.dot1, .dot2 {
+  width: 60%;
+  height: 60%;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  background-color: #d96b27;
+  border-radius: 100%;
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.dot2 {
+  top: auto;
+  bottom: 0;
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+/*end spinkit*/
+@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
