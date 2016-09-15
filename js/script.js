@@ -213,37 +213,35 @@ $('.download-shp').click(function() {
     }
   }
 
-  //start the download
-  function saveBlob(filename, blob, done) {
-    //IE11 & Edge
-    if (navigator.msSaveBlob) {
-        navigator.msSaveBlob(blob, filename);
-    } else {
-        //In FF link must be added to DOM to be clicked
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', filename);
-        document.body.appendChild(link);    
-        link.click();
-        //document.body.removeChild(link);    
-    }
-    done();
-  }
+ 
+
 
 })
+
 
 
 $('.download-geojson').click(function() {
-    $("<a />", {
-      "download": "travelsheds.geojson",
-      "href" : "data:application/json," + encodeURIComponent(JSON.stringify(isochroneFC))
-    }).appendTo("body")
-    .click(function() {
-       $(this).remove()
-    })[0].click()
-
+    //prepare blob from geojson
+    var blob = new Blob([JSON.stringify(isochroneFC)], { type: "text/plain" });
+    saveBlob('travelsheds.geojson', blob, function() {})
 })
 
+
+function saveBlob(filename, blob, done) {
+  //IE11 & Edge
+  if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob, filename);
+  } else {
+      //In FF link must be added to DOM to be clicked
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);    
+      link.click();
+      //document.body.removeChild(link);    
+  }
+  done();
+}
 
 function getIsochrone(lngLat) {
 
