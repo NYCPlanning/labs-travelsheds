@@ -96,6 +96,10 @@ nav {
   font-size: 28px;
 }
 
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
+  color: #af4c0f;
+}
+
 .fa-github {
   font-size: 18px;
 }
