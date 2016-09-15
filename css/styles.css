@@ -175,3 +175,18 @@ h4 {
     -webkit-transform: scale(1.0);
   }
 }
+
+/*Modal*/
+
+.modal-title {
+  color: #d96b27;
+}
+
+.modal-body h5 {
+  font-family: oswald;
+  font-size: 17px;;
+}
+
+.modal-body {
+  font-family: sans-serif;
+}

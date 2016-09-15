@@ -26,8 +26,10 @@
       <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="#">Travelsheds</a></div>
       <div id="navbar" class="navbar-collapse collapse">
          <ul class="nav navbar-nav ">
-            <li><a href="../navbar/"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
-            <li><a href="../navbar/"><i class="fa fa-github fa-3" aria-hidden="true"></i> Fork Me on GitHub</a></li>
+            <li><a data-toggle="modal" data-target="#aboutModal"><span class="glyphicon glyphicon-info-sign" aria-hidden="true" ></span> About</a></li>
+            <li><a data-toggle="modal" data-target="#technologyModal"><i class="fa fa-cogs" aria-hidden="true"></i> Technology</a></li>
+
+            <li><a href="https://github.com/nycplanning/travelsheds"><i class="fa fa-github" aria-hidden="true"></i> Fork Me on GitHub</a></li>
          </ul>
       </div>
    
@@ -68,6 +70,73 @@
             <div class="dot2"></div>
           </div>
           <h3>Loading Travelsheds</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">About Travelsheds</h4>
+          </div>
+          <div class="modal-body">
+            <h5>What's a Travelshed?</h5>
+            <p>Travelsheds are areas that describe how far you can travel from a point on various modes of transportation in a given amount of time. By layering travelsheds for different travel times from the same point, you can visually see the patterns of accessibility as <a href = "https://en.wikipedia.org/wiki/Isochrone_map">isochrones</a>.</p>
+
+            <h5>How is this useful?</h5>
+            <p>The resulting travelshed geometries give a quick visual cue about access, but can be further used in geospatial analysis.  Some examples of their utility include: Counting the population within 30 minutes of travel time to a public facility, counting the number of businesses/jobs accessible from a given location, etc.</p>
+
+            <p>We have provided shapefile and geojson download links so you can continue your travelshed geometries and continue your analysis</p>
+
+            <h5>Feedback</h5>
+            <p>We would love your feedback on this tool!  Feel free to open an issue on github if you know how to do that sort of thing.  If not, just shoot an email to ... or tweet at @nycplanning</p>
+
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="technologyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Technology</h4>
+          </div>
+          <div class="modal-body">
+
+            <p>This travelshed tool makes use of <a href="https://en.wikipedia.org/wiki/Open_data">open data</a> and <a href="https://en.wikipedia.org/wiki/Open-source_software">open source software</a>, and was built in-house at the New York City <a href="www.nyc.gov/dcp">Department of City Planning.</a></p>
+
+            <h5>Routing - OpenTripPlanner</h5>
+            <p>The core routing technology is <a href = "http://www.opentripplanner.org/">OpenTripPlanner (OTP)</a>, a free Multimodal trip planning & analysis package.</p> 
+
+            <h5>Street Network Data - OpenStreetMap</h5> 
+            <p>OTP needs comprehensive data for the street network and transit schedules in order to calculate travel times. For the New York City Street Grid, we use Open Data from <a href="https://www.openstreetmap.org/">Open Street Map (OSM)</a>, the free, editable map of the whole world that is being built by volunteers largely from scratch and released with an open-content license.</p>  We used a prepared slice of OSM data containing the NYC metro area from <a href="https://mapzen.com/data/metro-extracts/">Mapzen's OSM Metro Extracts.</a>
+
+            <h5>Transit Schedules - GTFS</h5>
+            <p>For subway schedule data, we used the MTA's GTFS file, available on their <a href ="http://web.mta.info/developers/">open data/developer resources page</a>.</p>
+
+            <h5>Web Mapping</h5>
+            <p>The web map technology is <a href="https://www.mapbox.com/mapbox-gl-js/api/">MapboxGL.js</a>, an open source mapping library created by MapBox. The transit lines layer is a raster tile layer served from a <a href="https://carto.com/">Carto</a> account.  The subway lines data used in this layer were created and <a href="https://nycdoittpublicdata.carto.com/u/nycpublicdata/">hosted as open data by NYC DoITT's GIS Team.</a></p>
+
+            <h5>Frontend</h5>
+            <p>Various frontend tools are used in this implementation, including <a href="http://getbootstrap.com/">Bootstrap</a> for layouts and components, <a href="http://www.mapshaper.org/">Mapshaper.js</a> for data conversion and downloads, <a href="https://facebook.github.io/react/">react.js</a> for the time cutoff chooser, <a href="https://jquery.com/">jQuery</a> for other interactivity, and <a href="https://github.com/janl/mustache.js/">mustache.js</a> for templating</p>
+
+            <h5>Github</h5>
+            <p>We share our code on github!  Check out the <a href="http://github.com/nycplanning">DCP's Github Organization</a>, submit issues and bug reports, or fork this project for your own travelshed generator.  We'd love to hear your feedback!</p>
+
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
         </div>
       </div>
     </div>
