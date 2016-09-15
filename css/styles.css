@@ -107,6 +107,7 @@ nav {
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
   color: #af4c0f;
+  cursor: pointer;
 }
 
 .fa-github {

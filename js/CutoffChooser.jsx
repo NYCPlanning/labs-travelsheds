@@ -27,7 +27,6 @@ var CutoffChooser = React.createClass({
       cutoffs: this.state.cutoffs
     })
     window.cutoffs=this.state.cutoffs
-    console.log('window', window.cutoffs)
 
   },
 
@@ -37,7 +36,6 @@ var CutoffChooser = React.createClass({
 
   render: function(){
     var self=this;
-    console.log(this.state)
 
     return(
       <div >

@@ -1,4 +1,5 @@
 var isochroneFC
+var lngLat
 zip.workerScriptsPath = 'js/zipWorkerScripts/'
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q';
@@ -99,20 +100,9 @@ zip.workerScriptsPath = 'js/zipWorkerScripts/'
 
       map.on('click', function(e){
 
-        $('#loading-overlay').fadeIn()
-        map.setLayoutProperty('transitsheds', 'visibility', 'none')
 
-        map.getSource('dropped-pin').setData({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [e.lngLat.lng, e.lngLat.lat]
-          }
-        })
-
-        $('.download-button').attr('disabled', true)
-
-        getIsochrone(e.lngLat);
+        lngLat = e.lngLat
+        getIsochrone();
       }) 
     }
 
@@ -137,11 +127,16 @@ $('.clear-button').click(function() {
 
   //disable download buttons
   $('.download-button').attr('disabled', true)
+  $('.redraw-button').attr('disabled', true)
 
   //restore default message
   $('.message').show()
   $('.clear-button').hide()
 
+})
+
+$('.redraw-button').click(function() {
+  getIsochrone()
 })
 
 $('.download-shp').click(function() {
@@ -248,12 +243,46 @@ function saveBlob(filename, blob, done) {
   done();
 }
 
-function getIsochrone(lngLat) {
+function getIsochrone() {
 
-  var apiCall = Mustache.render('https://{{host}}/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date=2016/09/25&time=12:00:00&mode={{mode}}', {
+
+  $('#loading-overlay').fadeIn()
+  map.setLayoutProperty('transitsheds', 'visibility', 'none')
+
+  map.getSource('dropped-pin').setData({
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [lngLat.lng, lngLat.lat]
+    }
+  })
+
+  $('.download-button').attr('disabled', true)
+
+
+  //prepare a date
+  var day = $('.day-select').val()
+  var hour = $('.hour-select').val()
+
+  var date = day=='saturday' ? '2016/09/24' :
+    day=='sunday' ? '2016/09/25':
+    '2016/09/23'
+
+  var time = hour + ':00:00'
+
+  //use these days for now...
+  //2016/09/23 - weekday
+  //2016/09/24 - saturday
+  //2016/09/25 - sunday
+
+
+
+  var apiCall = Mustache.render('https://{{host}}/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date={{{date}}}&time={{time}}&mode={{mode}}', {
+      host: 'otp.reallysimpleopendata.com',
       lat: lngLat.lat,
       lng: lngLat.lng,
-      host: 'otp.reallysimpleopendata.com',
+      date: date,
+      time: time,
       mode: mode
   })
 
@@ -272,6 +301,7 @@ function getIsochrone(lngLat) {
     map.setLayoutProperty('transitsheds', 'visibility', 'visible')
     $('#loading-overlay').fadeOut()
     $('.download-button').attr('disabled', false)
+    $('.redraw-button').attr('disabled', false)
 
     $('.message').hide()
     $('.clear-button').show()
