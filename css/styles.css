@@ -83,6 +83,11 @@ nav {
   background-color: #EBEBEB;
 }
 
+
+ul.navbar-right {
+    margin-right: 0;
+}
+
 .navbar-default .navbar-nav>li>a {
   padding: 30px 18px;
   color: #db691b;
