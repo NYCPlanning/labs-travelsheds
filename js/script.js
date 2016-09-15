@@ -107,6 +107,7 @@ $('.download-button').click(function() {
         center: [-74.024849,40.705628],
         pitch: 0
     })
+    map.addControl(new mapboxgl.Navigation());
 
     //manually instantiate cartodb map
 
@@ -149,15 +150,7 @@ $('.download-button').click(function() {
         }
       })
 
-      map.addLayer({
-        "id": "dropped-pin",
-        "type": "circle",
-        "source": "dropped-pin",
-        "paint": {
-            "circle-radius": 4,
-            "circle-color": "steelblue"
-        }
-      });
+
 
       map.addSource('transitsheds', {
         type: 'geojson',
@@ -173,12 +166,39 @@ $('.download-button').click(function() {
         "source": "transitsheds",
         "paint": {
           'fill-color': 'steelblue',
-          'fill-opacity': 0.6     
+          'fill-opacity': 0.3,
+          'fill-outline-color': 'gray'     
         }
-      });      
+      });    
+
+      map.addLayer({
+        "id": "dropped-pin2",
+        "type": "circle",
+        "source": "dropped-pin",
+        "paint": {
+            "circle-radius": 6,
+            "circle-color": "gray"
+        }
+      }); 
+
+      map.addLayer({
+        "id": "dropped-pin",
+        "type": "circle",
+        "source": "dropped-pin",
+        "paint": {
+            "circle-radius": 5,
+            "circle-color": "orange"
+        }
+      }); 
+
+      
 
 
       map.on('click', function(e){
+
+  
+        map.setLayoutProperty('transitsheds', 'visibility', 'none')
+
         map.getSource('dropped-pin').setData({
           type: 'Feature',
           geometry: {
@@ -217,7 +237,7 @@ function getIsochrone(lngLat) {
     isochroneFC = geojson
 
     map.getSource('transitsheds').setData(geojson)
-
+    map.setLayoutProperty('transitsheds', 'visibility', 'visible')
 
 
   })
