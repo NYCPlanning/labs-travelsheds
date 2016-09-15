@@ -38,22 +38,31 @@ body {
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgba(128, 128, 128, 0.18);
+  background-color: rgba(128, 128, 128, 0.59);
   z-index: 5;
   display:none;
 }
 
 #loading-overlay h3 {
   font-family: oswald;
+  position: relative;
+  top: -100px;
   color: #d96b27;
   margin: 0 auto;
   text-align: center;
-  text-shadow: 2px 2px 2px hsla(216, 1%, 5%, 0.45);
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
 
 .spinner {
   position: relative;
-  top: 78px;      
+  top: -20px;      
+}
+
+.spinner-container {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%); 
 }
 
 #sidebar {
@@ -127,34 +136,45 @@ h4 {
 
 /*spinkit*/
 .spinner {
-  margin: 100px auto;
   width: 40px;
   height: 40px;
+
   position: relative;
-  text-align: center;
-  
-  -webkit-animation: sk-rotate 2.0s infinite linear;
-  animation: sk-rotate 2.0s infinite linear;
+  margin: 100px auto;
 }
 
-.dot1, .dot2 {
-  width: 60%;
-  height: 60%;
-  display: inline-block;
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #db691b;
+  opacity: 0.6;
   position: absolute;
   top: 0;
-  background-color: #d96b27;
-  border-radius: 100%;
+  left: 0;
   
   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
   animation: sk-bounce 2.0s infinite ease-in-out;
 }
 
-.dot2 {
-  top: auto;
-  bottom: 0;
+.double-bounce2 {
   -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
 }
 
 /*end spinkit*/

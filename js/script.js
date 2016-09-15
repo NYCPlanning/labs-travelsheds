@@ -130,6 +130,11 @@ $('.clear-button').click(function() {
     features: []
   })
 
+  map.getSource('dropped-pin').setData({
+    type: 'Feature',
+    geometry: null
+  })
+
   //disable download buttons
   $('.download-button').attr('disabled', true)
 
