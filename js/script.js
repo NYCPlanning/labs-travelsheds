@@ -217,7 +217,7 @@ $('.download-shp').click(function() {
   function saveBlob(filename, blob, done) {
     //IE11 & Edge
     if (navigator.msSaveBlob) {
-        navigator.msSaveBlob(csvData, exportFilename);
+        navigator.msSaveBlob(blob, filename);
     } else {
         //In FF link must be added to DOM to be clicked
         var link = document.createElement('a');
