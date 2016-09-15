@@ -16,21 +16,19 @@ $('.download-button').click(function() {
     }
   }
 
-
+  //create a mapshaper dataset from geojson FeatureCollection
   var msDataset = mapshaper.internal.importGeoJSON(isochroneFC, {
     auto_snap:false,
     files:['input.json'],
     no_repair:false
   })
 
+  //create an array of ArrayBuffers (one per file in the shapefile)
   var files = mapshaper.internal.exportShapefile(msDataset, {
     format: "shapefile"
   })
 
-  //add this as .prj file GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]
-
-  console.log(files)
-
+  //manually create a .prj file for WGS84
   var crsString = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]'
  
   var buf = new ArrayBuffer(crsString.length*2)
@@ -44,13 +42,12 @@ $('.download-button').click(function() {
     content: buf,
     filename: '.prj'
   })
-
-  console.log(files)
   
 
   saveZipFile('travelsheds.zip',files, function(){
   })
 
+  //combine all files into a zip archive
   //from mapshaper-gui.js
  function saveZipFile(zipfileName, files, done) {
     var toAdd = files;
@@ -82,6 +79,7 @@ $('.download-button').click(function() {
     }
   }
 
+  //start the download
   function saveBlob(filename, blob, done) {
     //IE11 & Edge
     if (navigator.msSaveBlob) {
