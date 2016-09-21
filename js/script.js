@@ -162,20 +162,21 @@ $('.download-shp').click(function() {
     format: "shapefile"
   })
 
-  //manually create a .prj file for WGS84
-  var crsString = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]'
+  // //manually create a .prj file for WGS84
+  // not working properly, excluding prj for now...
+  // var crsString = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]'
  
-  var buf = new ArrayBuffer(crsString.length*2)
-  var bufView = new Uint16Array(buf);
+  // var buf = new ArrayBuffer(crsString.length*2)
+  // var bufView = new Uint16Array(buf);
 
-  for (var i=0, strLen=crsString.length; i<strLen; i++) {
-    bufView[i] = crsString.charCodeAt(i);
-  }
+  // for (var i=0, strLen=crsString.length; i<strLen; i++) {
+  //   bufView[i] = crsString.charCodeAt(i);
+  // }
 
-  files.push({
-    content: buf,
-    filename: '.prj'
-  })
+  // files.push({
+  //   content: buf,
+  //   filename: '.prj'
+  // })
   
 
   saveZipFile('travelsheds.zip',files, function(){
