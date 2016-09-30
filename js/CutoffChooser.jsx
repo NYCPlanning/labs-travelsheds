@@ -1,3 +1,4 @@
+
 var CutoffChooser = React.createClass({
   getInitialState() {
     return({
@@ -26,6 +27,7 @@ var CutoffChooser = React.createClass({
     this.setState({
       cutoffs: this.state.cutoffs
     })
+
     window.cutoffs=this.state.cutoffs
 
   },

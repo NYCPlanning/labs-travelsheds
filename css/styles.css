@@ -10,9 +10,9 @@ body {
 }
 
 #map {
-  width: auto;
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.55);
+  width: calc(100vw - 300px);
 }
 
 .mapOverlay {
@@ -73,6 +73,7 @@ body {
   -webkit-transition: all 0.25s ease-out;
   -moz-transition: all 0.25s ease-out;
   transition: all 0.25s ease-out;
+  overflow-y: scroll;
 }
 
 nav {
@@ -218,4 +219,27 @@ h4 {
 }
 
 
+/*Beta Banner*/
+
+body:after{
+    content: "beta";
+    position: fixed;
+    width: 80px;
+    height: 25px;
+    background: #D96B27;
+    top: 7px;
+    left: -20px;
+    text-align: center;
+    font-size: 13px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    line-height: 27px;
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    z-index: 10000;
+    border-bottom: 1px solid #fff;
+}
 
