@@ -287,8 +287,11 @@ function getIsochrone() {
   })
 
   cutoffs.forEach(function(cutoff) {
-    var seconds = cutoff * 60
-    apiCall += '&cutoffSec=' + seconds
+    //check if valid integer
+    if(Number.isInteger(cutoff)) {
+      var seconds = cutoff * 60
+      apiCall += '&cutoffSec=' + seconds      
+    }
   })
 
   console.log('Fetching isochrones...', apiCall)
