@@ -279,7 +279,7 @@ function getIsochrone() {
 
 
   var apiCall = Mustache.render('https://{{host}}/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lng}}&date={{{date}}}&time={{time}}&mode={{mode}}', {
-      host: 'otp.reallysimpleopendata.com',
+      host: 'otp.capitalplanning.nyc',
       lat: lngLat.lat,
       lng: lngLat.lng,
       date: date,
