@@ -12,13 +12,13 @@
 
     <link rel="icon" href="./favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css">
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css' rel='stylesheet'/>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://use.fontawesome.com/1ef4cc9437.js"></script>
     <link rel="stylesheet" href="css/styles.css">
   </head>
 
- 
+
 
   <body>
 
@@ -32,7 +32,7 @@
             <li><a href="https://github.com/nycplanning/travelsheds"><i class="fa fa-github" aria-hidden="true"></i> Fork Me on GitHub</a></li>
          </ul>
       </div>
-   
+
 </nav>
 
     <div id="container">
@@ -78,7 +78,7 @@
           </div>
           <h4>Travel Mode(s)</h4>
           <div class="form-group">
-          
+
             <select class="form-control mode-select" >
               <option value="TRANSIT,WALK">Subway + Walk</option>
               <option value="WALK">Walk</option>
@@ -154,9 +154,9 @@
             <p>This travelshed tool makes use of <a href="https://en.wikipedia.org/wiki/Open_data">open data</a> and <a href="https://en.wikipedia.org/wiki/Open-source_software">open source software</a>, and was built in-house at the New York City <a href="www.nyc.gov/dcp">Department of City Planning.</a></p>
 
             <h5>Routing - OpenTripPlanner</h5>
-            <p>The core routing technology is <a href = "http://www.opentripplanner.org/">OpenTripPlanner (OTP)</a>, a free Multimodal trip planning & analysis package.</p> 
+            <p>The core routing technology is <a href = "http://www.opentripplanner.org/">OpenTripPlanner (OTP)</a>, a free Multimodal trip planning & analysis package.</p>
 
-            <h5>Street Network Data - OpenStreetMap</h5> 
+            <h5>Street Network Data - OpenStreetMap</h5>
             <p>OTP needs comprehensive data for the street network and transit schedules in order to calculate travel times. For the New York City Street Grid, we use Open Data from <a href="https://www.openstreetmap.org/">Open Street Map (OSM)</a>, the free, editable map of the whole world that is being built by volunteers largely from scratch and released with an open-content license.</p>  We used a prepared slice of OSM data containing the NYC metro area from <a href="https://mapzen.com/data/metro-extracts/">Mapzen's OSM Metro Extracts.</a>
 
             <h5>Transit Schedules - GTFS</h5>
@@ -185,7 +185,7 @@
     <script src="https://fb.me/react-15.0.0.js"></script>
     <script src="https://fb.me/react-dom-15.0.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
 
@@ -193,6 +193,7 @@
     <script type="text/babel">
 
     </script>
+    <script src="js/subway.js"></script>
     <script src="js/script.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -204,6 +205,6 @@
       ga('send', 'pageview');
 
     </script>
- 
+
   </body>
 </html>
