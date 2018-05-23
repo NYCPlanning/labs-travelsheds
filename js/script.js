@@ -1,3 +1,5 @@
+let map;
+let lngLat;
 let isochroneFC;
 zip.workerScriptsPath = 'js/zipWorkerScripts/';
 
@@ -17,7 +19,7 @@ function saveBlob(filename, blob, done) {
   done();
 }
 
-function getIsochrone(map, lngLat) {
+function getIsochrone() {
   $('#loading-overlay').fadeIn();
   map.setLayoutProperty('transitsheds', 'visibility', 'none');
 
@@ -138,12 +140,12 @@ function setupMapLayers(map, layergroupid) {
 
 
   map.on('click', (e) => {
-    const { lngLat } = e;
-    getIsochrone(map, lngLat);
+    lngLat = e.lngLat;
+    getIsochrone();
   });
 }
 
-const map = new mapboxgl.Map({
+map = new mapboxgl.Map({
   container: 'map',
   style: '//raw.githubusercontent.com/NYCPlanning/labs-gl-style/master/data/style.json',
   zoom: 10,
